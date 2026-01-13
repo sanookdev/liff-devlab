@@ -11,6 +11,16 @@ import {
   replyPromotionFlex,
   replyContactFlex,
 } from "../services/line.service.js";
+import { listRichMenus, linkRichMenuToUser } from "../services/richmenu.service.js";
+
+// Helper function to find rich menu by name
+async function findRichMenuByName(searchName) {
+  const response = await listRichMenus();
+  const richmenus = response.data.richmenus || [];
+  return richmenus.find(menu =>
+    menu.name.toLowerCase().includes(searchName.toLowerCase())
+  );
+}
 
 
 export async function handleWebhook(req, res) {
@@ -71,9 +81,56 @@ async function onMessage(event) {
     return replyContactFlex(event.replyToken);
   }
 
+  // === Rich Menu Switch Commands ===
+  if (text === "ร้านอาหาร" || text === "restaurant") {
+    const menu = await findRichMenuByName("ร้านอาหาร");
+    if (menu && userId) {
+      await linkRichMenuToUser(menu.richMenuId, userId);
+      return replyText(event.replyToken, "🍜 เปลี่ยนเป็นเมนูร้านอาหารแล้ว!");
+    }
+    return replyText(event.replyToken, "❌ ไม่พบเมนูร้านอาหาร");
+  }
+
+  if (text === "helpme" || text === "help me") {
+    const menu = await findRichMenuByName("helpme");
+    if (menu && userId) {
+      await linkRichMenuToUser(menu.richMenuId, userId);
+      return replyText(event.replyToken, "🆘 เปลี่ยนเป็นเมนู Help Me แล้ว!");
+    }
+    return replyText(event.replyToken, "❌ ไม่พบเมนู Help Me");
+  }
+
+  // === Switch Menu Command ===
+  if (text === "switch" || text === "เปลี่ยนเมนู") {
+    return replyMessages(event.replyToken, [{
+      type: "text",
+      text: "🔄 เลือกเมนูที่ต้องการ:",
+      quickReply: {
+        items: [
+          {
+            type: "action",
+            action: {
+              type: "message",
+              label: "🍜 ร้านอาหาร",
+              text: "ร้านอาหาร"
+            }
+          },
+          {
+            type: "action",
+            action: {
+              type: "message",
+              label: "🆘 Help Me",
+              text: "helpme"
+            }
+          }
+        ]
+      }
+    }]);
+  }
+
   // === Other Commands ===
   if (text === "help") {
-    return replyText(event.replyToken, "📌 คำสั่ง: menu | promotion | contact | ping | pushme");
+    return replyText(event.replyToken, "📌 คำสั่ง: menu | promotion | contact | switch | ping | pushme");
   }
 
   if (text === "ping") {
