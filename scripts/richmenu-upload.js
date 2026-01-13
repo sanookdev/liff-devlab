@@ -3,7 +3,7 @@ import { getArg, } from "../src/utils/args.js";
 import { printUsage } from "./_common.js";
 
 const richMenuId = getArg(2);
-const imagePath = process.env.RICHMENU_IMAGE_PATH || "assets/richmenu.png";
+const imagePath = process.env.RICHMENU_IMAGE_PATH || "assets/richmenu.jpg";
 
 if (!richMenuId) {
   printUsage("npm run richmenu:upload --", "<RICHMENU_ID>");

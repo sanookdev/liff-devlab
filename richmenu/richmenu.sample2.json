@@ -1,0 +1,50 @@
+{
+  "size": {
+    "width": 2500,
+    "height": 1686
+  },
+  "selected": true,
+  "name": "Rich Menu Layout",
+  "chatBarText": "เมนูหลัก",
+  "areas": [
+    {
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1666,
+        "height": 1686
+      },
+      "action": {
+        "type": "message",
+        "label": "Promotion",
+        "text": "Promotion"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1667,
+        "y": 0,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "message",
+        "label": "Menu",
+        "text": "Menu"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1667,
+        "y": 844,
+        "width": 833,
+        "height": 842
+      },
+      "action": {
+        "type": "message",
+        "label": "Contact",
+        "text": "Contact"
+      }
+    }
+  ]
+}
