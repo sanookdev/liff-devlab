@@ -1,0 +1,2 @@
+วางไฟล์รูป richmenu.png หรือ richmenu.jpg ไว้ในโฟลเดอร์ assets/
+แนะนำชื่อ: assets/richmenu.png
